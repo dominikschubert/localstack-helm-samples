@@ -1,0 +1,30 @@
+image:
+  repository: localstack/localstack
+  tag: 1.4
+
+service:
+  type: LoadBalancer
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  externalTrafficPolicy: Local
+  edgeService:
+    name: edge
+    targetPort: 4566
+  externalServicePorts:
+    start: 4510
+    end: 4550
+
+mountDind:
+  enabled: true
+  forceTLS: true
+
+debug: true
+
+extraEnvVars:
+  - name: LAMBDA_EXECUTOR
+    value: docker
+  - name: DNS_ADDRESS
+    value: "0"
+  - name: MAIN_CONTAINER_NAME
+    value: localstack
